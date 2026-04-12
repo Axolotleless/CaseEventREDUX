@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Case Event — Axo's Stuff</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#ece9d8;
+  --bmid:#aca899;
+  --blue:#0054e3;
+  --font:'Tahoma','MS Sans Serif',sans-serif;
+  --pixel:'Press Start 2P',monospace;
+}
+html,body{width:100%;min-height:100vh;overflow-x:hidden;font-family:var(--font);font-size:12px;background:#3a6ea5;}
+
+/* DESKTOP */
+#desktop{
+  min-height:100vh;
+  padding-bottom:44px;
+  background-image:url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');
+  background-size:cover;background-position:center;background-attachment:fixed;
+  position:relative;
+}
+
+/* WINDOW CHROME */
+.xpw{border-radius:8px 8px 4px 4px;overflow:hidden;box-shadow:3px 3px 16px rgba(0,0,0,.65);border:2px solid var(--blue);}
+.xp-tb{
+  height:30px;flex-shrink:0;
+  background:linear-gradient(180deg,#0831d9 0%,#3d6ef6 8%,#0050c8 12%,#0050c8 88%,#003aaa 94%,#6a8fff 96%,#003aaa 100%);
+  display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 8px;user-select:none;cursor:default;
+}
+.xp-tl{display:flex;align-items:center;gap:6px;color:#fff;font-weight:bold;font-size:12px;text-shadow:1px 1px 2px rgba(0,0,0,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.xp-ti{width:16px;height:16px;flex-shrink:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" fill="%23ff4" stroke="%23860" stroke-width=".8"/><rect x="9" y="1" width="6" height="6" fill="%234f4" stroke="%23060" stroke-width=".8"/><rect x="1" y="9" width="6" height="6" fill="%234af" stroke="%23048" stroke-width=".8"/><rect x="9" y="9" width="6" height="6" fill="%23f44" stroke="%23800" stroke-width=".8"/></svg>') center/contain no-repeat;}
+.xp-tbg{display:flex;gap:3px;flex-shrink:0;}
+.xp-tbb{width:22px;height:22px;border-radius:3px;border:1px solid rgba(0,0,30,.5);font-size:11px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,.5);background:linear-gradient(180deg,#5070e0,#2048c8);}
+.xp-tbb:hover{background:linear-gradient(180deg,#7090ff,#4060e0);}
+.xp-tbb.xc{background:linear-gradient(180deg,#e86060,#c02020);}
+.xp-tbb.xc:hover{background:linear-gradient(180deg,#ff7070,#e03030);}
+.xp-mb{background:var(--bg);padding:2px 4px;border-bottom:1px solid var(--bmid);display:flex;gap:2px;flex-shrink:0;}
+.xp-mi{padding:2px 8px;font-size:11px;cursor:default;border:1px solid transparent;border-radius:2px;}
+.xp-mi:hover{background:#316ac5;color:#fff;}
+.xp-body{background:var(--bg);overflow:hidden;}
+.xp-sb{background:var(--bg);border-top:1px solid var(--bmid);padding:3px 8px;font-size:10px;display:flex;gap:4px;flex-shrink:0;}
+.xp-sc{border:1px inset var(--bmid);padding:1px 5px;flex:1;}
+
+/* CONTROLS */
+.btn{background:linear-gradient(180deg,#f5f4ee,#dbd7cb);border:none;box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #606060,0 1px 3px rgba(0,0,0,.15);padding:5px 18px;font-family:var(--font);font-size:11px;cursor:pointer;min-width:80px;border-radius:3px;white-space:nowrap;}
+.btn:hover{background:linear-gradient(180deg,#dce9ff,#b8d0ff);}
+.btn:active{box-shadow:inset 1px 1px 0 #606060,inset -1px -1px 0 #fff;}
+.btn.pri{box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #606060,0 0 0 2px var(--blue),0 1px 3px rgba(0,0,0,.15);}
+.inp{background:#fff;border:none;box-shadow:inset 1px 1px 0 #606060,inset -1px -1px 0 #fff;padding:4px 6px;font-family:var(--font);font-size:11px;width:100%;outline:none;border-radius:2px;}
+.inp:focus{box-shadow:inset 1px 1px 0 #606060,inset -1px -1px 0 #fff,0 0 0 2px #5090ff;}
+.lbl{font-weight:bold;margin-bottom:4px;display:block;font-size:11px;}
+.sep{border:none;border-top:1px solid var(--bmid);border-bottom:1px solid #fff;margin:8px 0;}
+.inset{border:none;box-shadow:inset 1px 1px 0 #606060,inset -1px -1px 0 #fff;background:#fff;padding:6px 8px;margin:4px 0;font-size:11px;}
+.raised{box-shadow:inset -1px -1px 0 #606060,inset 1px 1px 0 #fff;padding:6px 8px;margin:4px 0;}
+
+/* ICONS */
+.ico-info{background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%230074d9"/><circle cx="16" cy="9.5" r="2.5" fill="white"/><rect x="13.5" y="14" width="5" height="11" rx="1.5" fill="white"/></svg>') center/contain no-repeat;}
+.ico-warn{background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><polygon points="16,2 31,29 1,29" fill="%23ffd700" stroke="%23b8860b" stroke-width="1.5"/><rect x="14.5" y="12" width="3" height="9" rx="1" fill="%23222"/><circle cx="16" cy="25" r="2" fill="%23222"/></svg>') center/contain no-repeat;}
+.ico-error{background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%23cc1111"/><line x1="9" y1="9" x2="23" y2="23" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="23" y1="9" x2="9" y2="23" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>') center/contain no-repeat;}
+.ico-q{background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="%230074d9"/><text x="16" y="23" text-anchor="middle" fill="white" font-size="20" font-weight="bold" font-family="Arial">?</text></svg>') center/contain no-repeat;}
+.ico-ev{background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="5" width="28" height="25" rx="2" fill="%23ffe066" stroke="%23cc8800" stroke-width="1.5"/><rect x="2" y="5" width="28" height="8" rx="2" fill="%23cc2222"/><rect x="9" y="1" width="3" height="7" rx="1.5" fill="%23444"/><rect x="20" y="1" width="3" height="7" rx="1.5" fill="%23444"/><rect x="5" y="17" width="5" height="4" rx="1" fill="%230054e3"/><rect x="13.5" y="17" width="5" height="4" rx="1" fill="%230054e3"/><rect x="22" y="17" width="5" height="4" rx="1" fill="%230054e3"/></svg>') center/contain no-repeat;}
+.mico{width:32px;height:32px;flex-shrink:0;}
+
+/* DESKTOP ICONS */
+.dicons{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:8px;}
+.dicon{display:flex;flex-direction:column;align-items:center;gap:4px;width:72px;padding:6px 4px;cursor:pointer;border:2px solid transparent;border-radius:4px;color:#fff;text-align:center;font-size:10px;text-shadow:1px 1px 3px #000,0 0 6px #000;user-select:none;}
+.dicon:hover{background:rgba(49,106,197,.5);border-color:rgba(100,150,255,.7);}
+.diem{font-size:28px;line-height:1;}
+
+/* WINDOWS LAYOUT */
+.winpos{position:absolute;}
+
+/* TASKBAR */
+#taskbar{position:fixed;bottom:0;left:0;right:0;height:34px;background:linear-gradient(180deg,#1f3d7a 0%,#3168c8 30%,#2458b8 70%,#1a3870 100%);border-top:2px solid #5080d0;z-index:9000;display:flex;align-items:center;gap:4px;padding:0 4px;}
+#sbtn{background:linear-gradient(180deg,#5cb83a,#3d9e1f);border:2px solid #1e6010;border-radius:0 14px 14px 0;color:#fff;font-weight:bold;font-size:13px;padding:0 14px 0 8px;cursor:pointer;height:26px;display:flex;align-items:center;gap:6px;text-shadow:1px 1px 2px rgba(0,0,0,.6);font-family:var(--font);flex-shrink:0;}
+#sbtn:hover{background:linear-gradient(180deg,#70d04a,#4ab82f);}
+.tbi{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:10px;padding:2px 8px;height:24px;display:flex;align-items:center;gap:4px;cursor:pointer;border-radius:2px;white-space:nowrap;max-width:130px;overflow:hidden;}
+.tbi:hover{background:rgba(255,255,255,.2);}
+.tbclk{margin-left:auto;background:rgba(0,0,0,.25);border:1px inset rgba(0,0,30,.4);color:#fff;font-size:11px;padding:2px 10px;height:24px;display:flex;align-items:center;flex-shrink:0;}
+
+/* SCROLL */
+.xscroll{overflow-y:auto;overflow-x:hidden;}
+.xscroll::-webkit-scrollbar{width:17px;}
+.xscroll::-webkit-scrollbar-track{background:#d4d0c8;}
+.xscroll::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#c8c4bc,#b0aca4);border:1px solid #888;}
+.xscroll::-webkit-scrollbar-button{background:linear-gradient(180deg,#e8e4dc,#c0bbb2);border:1px outset #888;height:17px;}
+
+/* CONTENT */
+.pbanner{background:linear-gradient(90deg,#0a2a80,#1a5acc 40%,#0e3bba 60%,#0a2a80);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.pbt{font-family:var(--pixel);font-size:13px;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.6),0 0 20px rgba(100,160,255,.5);line-height:1.6;}
+.pbs{font-family:var(--pixel);font-size:6px;color:#88aaff;margin-top:4px;letter-spacing:1px;}
+.sh{background:linear-gradient(90deg,#2050b0,#4a80e8);color:#fff;padding:5px 10px;font-weight:bold;font-size:12px;text-shadow:1px 1px 2px rgba(0,0,0,.5);margin:8px 0 4px;display:flex;align-items:center;gap:6px;}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0;}
+.tc{text-align:center;font-weight:bold;font-size:11px;padding:8px 4px;box-shadow:inset -1px -1px 0 rgba(0,0,0,.3),inset 1px 1px 0 rgba(255,255,255,.7);border-radius:2px;}
+.tc-r{background:#ffcccc;color:#880000;}
+.tc-g{background:#ccffcc;color:#005500;}
+.tc-y{background:#ffffaa;color:#775500;}
+.tc-b{background:#cce4ff;color:#003388;}
+.dtbl{width:100%;border-collapse:collapse;font-size:11px;margin:6px 0;}
+.dtbl th{background:#316ac5;color:#fff;padding:4px 8px;text-align:left;}
+.dtbl td{padding:4px 8px;border:1px solid #c8c4bc;}
+.dtbl tr:nth-child(even) td{background:#f0eedf;}
+.rlist{padding-left:16px;}
+.rlist li{margin:5px 0;font-size:11px;line-height:1.5;}
+
+/* PROGRESS */
+.pw{background:#fff;box-shadow:inset 1px 1px 0 #606060,inset -1px -1px 0 #fff;height:20px;overflow:hidden;margin:6px 0;border-radius:1px;}
+.pb{height:100%;background:linear-gradient(180deg,#4090ff,#0050c8);width:0%;transition:width .3s ease;}
+
+/* POPUPS */
+.popup{position:fixed;z-index:6000;border-radius:8px 8px 4px 4px;overflow:hidden;border:2px solid var(--blue);box-shadow:4px 4px 16px rgba(0,0,0,.7);min-width:240px;max-width:min(380px,90vw);animation:popIn .15s ease-out;}
+@keyframes popIn{from{transform:scale(.8);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pbody{background:var(--bg);padding:14px 16px 12px;display:flex;flex-direction:column;gap:10px;}
+.pmr{display:flex;align-items:flex-start;gap:12px;}
+.ptxt{font-size:11px;line-height:1.55;white-space:pre-wrap;flex:1;}
+.pbtns{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;}
+
+/* BSOD */
+#bsod{display:none;position:fixed;inset:0;background:#0000aa;z-index:99999;color:#c0c0f8;font-family:var(--pixel);padding:clamp(20px,5vw,60px) clamp(16px,8vw,100px);overflow:auto;}
+.bhl{background:#aaaaf8;color:#0000aa;padding:3px 8px;font-size:10px;display:inline-block;margin-bottom:20px;}
+.bbody{font-size:clamp(7px,1.5vw,10px);line-height:2.2;}
+.bevn{font-size:clamp(10px,2.5vw,18px);color:#fff;margin:24px 0 8px;animation:bglow 2s ease-in-out infinite;}
+@keyframes bglow{0%,100%{text-shadow:0 0 10px #4444ff;}50%{text-shadow:0 0 30px #8888ff,0 0 60px #4444cc;}}
+.bdate{font-size:clamp(8px,2vw,13px);color:#ffff55;margin:6px 0;}
+.btz{font-size:clamp(6px,1.2vw,9px);color:#8899ff;margin-top:6px;}
+.bcur{animation:bcur 1s step-end infinite;}
+@keyframes bcur{50%{opacity:0;}}
+
+/* MOBILE */
+@media(max-width:900px){
+  #desktop{padding:12px 10px 50px;display:flex;flex-direction:column;gap:14px;background-attachment:scroll;}
+  .dicons{display:none;}
+  .winpos{position:static!important;width:100%!important;max-width:100%!important;}
+  .xp-tb{cursor:default;}
+  .xp-tbb:not(.xc){display:none;}
+  .tgrid{grid-template-columns:repeat(2,1fr);}
+  .pbt{font-size:9px;}
+  .pbs{font-size:5px;}
+  .popup{left:50%!important;transform:translateX(-50%)!important;top:60px!important;right:auto!important;}
+  #bsod{padding:20px 16px;}
+}
+@media(max-width:480px){
+  .pbanner{padding:10px 12px;}
+  .pbt{font-size:7.5px;}
+  .tgrid{gap:4px;}
+  .popup{max-width:95vw;}
+  .btn{padding:5px 10px;min-width:60px;font-size:10px;}
+  .dtbl{font-size:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- AUDIO -->
+<audio id="snd-startup" preload="auto"><source src="startup.wav"></audio>
+<audio id="snd-error"   preload="auto"><source src="sfx.wav"></audio>
+<audio id="snd-notify"  preload="auto"><source src="sfx.wav"></audio>
+<audio id="snd-exclaim" preload="auto"><source src="sfx.wav"></audio>
+<audio id="snd-critical"preload="auto"><source src="sfx.wav"></audio>
+
+<div id="desktop">
+
+  <!-- DESKTOP ICONS -->
+  <div class="dicons">
+    <div class="dicon" ondblclick="showWin('mw')"><div class="diem">[G]</div><div>Case Event</div></div>
+    <div class="dicon" ondblclick="showWin('sw')"><div class="diem">[S]</div><div>Submit Game</div></div>
+    <div class="dicon" ondblclick="showWin('ew')"><div class="diem">[E]</div><div>Event Details</div></div>
+  </div>
+
+  <!-- MAIN WINDOW -->
+  <div id="mw" class="winpos xpw" style="top:30px;left:100px;width:min(720px,96vw);">
+    <div class="xp-tb" onmousedown="drag(event,'mw')">
+      <div class="xp-tl"><div class="xp-ti"></div>Case Event — Axo's Stuff</div>
+      <div class="xp-tbg">
+        <div class="xp-tbb">_</div><div class="xp-tbb">&#9633;</div>
+        <div class="xp-tbb xc" onclick="hideWin('mw')">X</div>
+      </div>
+    </div>
+    <div class="xp-mb"><span class="xp-mi">File</span><span class="xp-mi">View</span><span class="xp-mi">Help</span></div>
+    <div class="xp-body">
+      <div class="pbanner">
+        <div>
+          <div class="pbt">CASE EVENT</div>
+          <div class="pbs">HOSTED BY AXO'S STUFF · STUDIO LITE</div>
+        </div>
+      </div>
+
+      <div class="xscroll" style="max-height:clamp(320px,52vh,480px);padding:10px 12px;">
+
+        <!-- PLAYERS -->
+        <div class="raised" style="margin-bottom:12px;">
+          <div class="sh">CASE EVENT — PLAYERS</div>
+          <div style="padding:4px 2px;">
+            <p style="margin-bottom:8px;font-size:11px;">You will be assigned a <b>random team</b> and work together to solve puzzle games. Most points wins!</p>
+            <div class="tgrid">
+              <div class="tc tc-r">RED</div>
+              <div class="tc tc-g">GREEN</div>
+              <div class="tc tc-y">YELLOW</div>
+              <div class="tc tc-b">BLUE</div>
+            </div>
+            <p style="margin:8px 0 6px;font-size:11px;">Solve puzzles across multiple difficulties. Harder puzzles = more points!</p>
+            <table class="dtbl">
+              <tr><th>Difficulty</th><th>Points</th><th>Notes</th></tr>
+              <tr><td>Easy</td>  <td><b>10 pts</b></td><td>Quick, beginner-friendly</td></tr>
+              <tr><td>Normal</td><td><b>25 pts</b></td><td>Moderate challenge</td></tr>
+              <tr><td>Hard</td>  <td><b>50 pts</b></td><td>Complex — big reward</td></tr>
+            </table>
+            <div class="inset" style="margin-top:8px;"><b>Grand Prize:</b> Winning team joins the <b>Mega Studio Lite Collab Livestream 2.0!</b></div>
+            <p style="margin-top:6px;font-size:11px;"><b>Anyone can play</b> — Studio Lite membership is <i>not</i> required!</p>
+          </div>
+        </div>
+
+        <!-- DEVELOPERS -->
+        <div class="raised">
+          <div class="sh">CASE EVENT — DEVELOPERS</div>
+          <div style="padding:4px 2px;">
+            <p style="margin-bottom:8px;font-size:11px;">Want to contribute a puzzle game to the event? Read the rules carefully!</p>
+            <b class="lbl">Developer Rules:</b>
+            <ul class="rlist">
+              <li><b>No cheat routes</b> — must be solvable legitimately</li>
+              <li><b>Puzzle must be completable</b> — send proof via an <u>unlisted YouTube video</u> of you finishing it</li>
+              <li><b>Connect to the Main Game</b> — must link back to the main Case Event</li>
+              <li><b>Badge required</b> — award a badge on completion so the main game can track progress</li>
+            </ul>
+            <div class="inset" style="margin-top:10px;"><b>Creative Freedom:</b> Platformer, maze, riddle, minigame — anything goes as long as it follows the rules!</div>
+            <p style="margin-top:6px;font-size:11px;"><b>Anyone can be a Developer</b> — Studio Lite membership is <i>not</i> required!</p>
+            <p style="margin-top:4px;font-size:11px;">Submit your game using the <b>Submit Game</b> window.</p>
+          </div>
+        </div>
+
+      </div><!-- /scroll -->
+
+      <div style="padding:8px 12px;display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;border-top:1px solid var(--bmid);">
+        <button class="btn pri" onclick="showWin('sw')">Submit My Game</button>
+        <button class="btn" onclick="showEventRelease()">View Event Release</button>
+        <button class="btn" onclick="hideWin('mw')">Close</button>
+      </div>
+    </div>
+    <div class="xp-sb">
+      <div class="xp-sc">Ready</div>
+      <div class="xp-sc" style="flex:0;min-width:140px;">Axo's Stuff — Case Event</div>
+    </div>
+  </div>
+
+  <!-- SUBMIT WINDOW -->
+  <div id="sw" class="winpos xpw" style="top:80px;left:840px;width:min(460px,96vw);display:none;">
+    <div class="xp-tb" onmousedown="drag(event,'sw')">
+      <div class="xp-tl"><div class="xp-ti"></div>Submit Your Game — Case Event</div>
+      <div class="xp-tbg">
+        <div class="xp-tbb xc" onclick="hideWin('sw')">X</div>
+      </div>
+    </div>
+    <div class="xp-body" style="padding:14px 16px;">
+      <div class="pmr" style="margin-bottom:12px;">
+        <div class="mico ico-ev"></div>
+        <div>
+          <div style="font-family:var(--pixel);font-size:7.5px;color:var(--blue);margin-bottom:6px;">CASE EVENT DEVELOPERS</div>
+          <p style="font-size:11px;line-height:1.6;">Wanna be part of the Case Event <b>DEVELOPERS?</b><br>Fill in your details below. You will be redirected to the Google Form to submit.</p>
+        </div>
+      </div>
+      <hr class="sep">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div><label class="lbl" for="fu">Roblox Username *</label><input class="inp" id="fu" type="text" placeholder="YourRobloxUsername" autocomplete="off"></div>
+        <div><label class="lbl" for="fg">Game Link * <span style="font-weight:normal;color:#666;">(roblox.com/games/...)</span></label><input class="inp" id="fg" type="url" placeholder="https://www.roblox.com/games/..."></div>
+        <div><label class="lbl" for="fp">Proof Video <span style="font-weight:normal;color:#666;">(Unlisted YouTube)</span></label><input class="inp" id="fp" type="url" placeholder="https://youtu.be/..."></div>
+      </div>
+      <div id="spw" style="display:none;margin-top:10px;">
+        <div id="sst" style="font-size:10px;margin-bottom:4px;">Submitting...</div>
+        <div class="pw"><div class="pb" id="spb"></div></div>
+      </div>
+      <hr class="sep">
+      <div style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;">
+        <button class="btn pri" onclick="doSubmit()">Submit Game</button>
+        <button class="btn" onclick="hideWin('sw')">Cancel</button>
+      </div>
+    </div>
+    <div class="xp-sb"><div class="xp-sc" id="ssb">Fill in your details above</div></div>
+  </div>
+
+  <!-- EVENT DETAILS WINDOW -->
+  <div id="ew" class="winpos xpw" style="top:160px;left:220px;width:min(480px,96vw);display:none;">
+    <div class="xp-tb" onmousedown="drag(event,'ew')">
+      <div class="xp-tl"><div class="xp-ti"></div>Event Details — Case Event</div>
+      <div class="xp-tbg"><div class="xp-tbb xc" onclick="hideWin('ew')">X</div></div>
+    </div>
+    <div class="xp-body" style="padding:14px 16px;">
+      <div style="text-align:center;margin-bottom:12px;">
+        <div style="font-family:var(--pixel);font-size:9px;color:var(--blue);">EVENT RELEASE DATE</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-family:var(--pixel);font-size:7.5px;color:#aa0000;margin-top:8px;" id="evlt">Detecting timezone...</div>
+        <div style="font-size:10px;color:#555;margin-top:4px;" id="evtz"></div>
+      </div>
+      <div class="inset"><b>Manila Time (PHT / UTC+8):</b><br>April 25, 2026 — 4:20 PM</div>
+      <p style="margin-top:10px;font-size:11px;line-height:1.6;">The event goes live at <b>4:20 PM Manila time</b>. Your local equivalent is shown above.</p>
+      <hr class="sep">
+      <div style="display:flex;justify-content:flex-end;"><button class="btn pri" onclick="hideWin('ew')">OK</button></div>
+    </div>
+  </div>
+
+</div><!-- /desktop -->
+
+<!-- TASKBAR -->
+<div id="taskbar">
+  <button id="sbtn">&#8862; start</button>
+  <div class="tbi" onclick="toggleWin('mw')">Case Event</div>
+  <div class="tbi" onclick="toggleWin('sw')">Submit Game</div>
+  <div class="tbclk" id="clk">00:00</div>
+</div>
+
+<!-- BSOD -->
+<div id="bsod">
+  <div class="bhl">CASE_EVENT_IMMINENT_EXCEPTION</div>
+  <div class="bbody">
+    <p>A problem has been detected and Windows has been shut down to prevent damage to your computer.</p><br>
+    <p>CASE_EVENT_REDUX</p><br>
+    <p>If this is the first time you've seen this Stop error screen, restart your computer.</p>
+    <p>If this screen appears again, your drivers may be incompatible with Windows XP.</p><br>
+    <p>Technical information:</p><br>
+    <p>*** STOP: 0x0000C4SE (0x00000001, 0xC0DE0001, 0x00000000, 0xAX0S0001)</p>
+    <p>*** AXO_STUFF.SYS — Address 0xF00DBE3F base at 0x00000000, DateStamp 2026CAFE</p>
+    <div class="bevn">CASE EVENT RELEASES:</div>
+    <div class="bdate">APRIL 25, 2026 — 4:20 PM MANILA TIME (PHT / UTC+8)</div>
+    <div class="bdate" id="bsl">YOUR LOCAL TIME: DETECTING...</div>
+    <div class="btz"  id="btz">TIMEZONE: DETECTING...</div><br>
+    <p>WINNER JOINS MEGA STUDIO LITE COLLAB LIVESTREAM 2.0</p>
+    <p>HOSTED BY AXO'S STUFF — STUDIO LITE</p><br>
+    <p>Beginning dump of physical memory...</p>
+    <p>Physical memory dump complete.</p><br>
+    <p><span class="bcur">_</span></p>
+  </div>
+</div>
+
+<script>
+
+const GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSdQ-CH9hIE2-XchSmM3C-EoYbdR4NUzDx7pcp_WwtbLUWcYkg/viewform';
+const ENTRY_USERNAME   = 'entry.888567979';
+const ENTRY_GAME_LINK  = 'entry.15916099';
+const ENTRY_PROOF      = 'entry.1989666004';
+// ================================================================
+
+// CLOCK
+setInterval(()=>{
+  const n=new Date();
+  document.getElementById('clk').textContent=
+    String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+},1000);
+
+// SOUND
+function snd(id){try{const a=document.getElementById('snd-'+id);a.currentTime=0;a.play();}catch(e){}}
+
+// STARTUP
+window.addEventListener('load',()=>{
+  setTimeout(()=>snd('startup'),400);
+  setTimeout(()=>popup('welcome','info','Welcome!',
+    'Welcome to the CASE EVENT\nhosted by Axo\'s Stuff!\n\nExplore the windows to learn about the event and submit your puzzle game.\n\nDouble-click the desktop icons to open windows.',
+    [{label:'OK',fn:clearPopups}]
+  ),1300);
+  updateTimes();
+});
+
+// WINDOW OPS
+let nz=300;
+function showWin(id){const e=document.getElementById(id);if(e){e.style.display='';e.style.zIndex=nz++;}}
+function hideWin(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+function toggleWin(id){const e=document.getElementById(id);if(!e)return;e.style.display=(e.style.display==='none'||!e.style.display)?'block':'none';if(e.style.display==='block')e.style.zIndex=nz++;}
+
+// DRAG
+let dEl=null,dox=0,doy=0;
+function drag(e,id){
+  if(window.innerWidth<=900)return;
+  dEl=document.getElementById(id);
+  const r=dEl.getBoundingClientRect();dox=e.clientX-r.left;doy=e.clientY-r.top;
+  dEl.style.zIndex=nz++;e.preventDefault();
+}
+document.addEventListener('mousemove',e=>{if(!dEl)return;dEl.style.left=(e.clientX-dox)+'px';dEl.style.top=(e.clientY-doy)+'px';});
+document.addEventListener('mouseup',()=>{dEl=null;});
+
+// TIMES
+function evtUTC(){return new Date(Date.UTC(2026,3,25,8,20,0));}
+function fmtD(d){
+  const dy=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mo=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let h=d.getHours(),m=String(d.getMinutes()).padStart(2,'0');
+  const ap=h>=12?'PM':'AM';h=h%12||12;
+  return `${dy[d.getDay()]}, ${mo[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h}:${m} ${ap}`;
+}
+function tzStr(){
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const off=-new Date().getTimezoneOffset();
+  const s=off>=0?'+':'-';
+  const h=String(Math.floor(Math.abs(off)/60)).padStart(2,'0');
+  const m=String(Math.abs(off)%60).padStart(2,'0');
+  return `${tz} (UTC${s}${h}:${m})`;
+}
+function updateTimes(){
+  const ls=fmtD(evtUTC()),tz=tzStr();
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  s('evlt',ls);s('evtz','Your timezone: '+tz);
+  s('bsl','YOUR LOCAL TIME: '+ls.toUpperCase());
+  s('btz','TIMEZONE: '+tz.toUpperCase());
+}
+
+// POPUPS
+let pz=6000;
+function popup(id,icon,title,msg,btns,pos){
+  document.getElementById(id+'-p')?.remove();
+  const w=document.createElement('div');
+  w.className='popup';w.id=id+'-p';
+  const mb=window.innerWidth<=900;
+  if(mb){w.style.top='60px';w.style.left='50%';w.style.transform='translateX(-50%)';}
+  else if(pos){w.style.top=pos.t+'px';w.style.left=pos.l+'px';}
+  else{w.style.top=(80+Math.random()*180)+'px';w.style.left=(80+Math.random()*350)+'px';}
+  w.style.zIndex=pz++;
+  const tb=document.createElement('div');
+  tb.className='xp-tb';tb.onmousedown=e=>drag(e,id+'-p');
+  tb.innerHTML=`<div class="xp-tl"><div class="xp-ti"></div>${title}</div><div class="xp-tbg"><div class="xp-tbb xc" onclick="document.getElementById('${id}-p')?.remove()">X</div></div>`;
+  const bd=document.createElement('div');bd.className='pbody';
+  const mr=document.createElement('div');mr.className='pmr';
+  mr.innerHTML=`<div class="mico ico-${icon}"></div><div class="ptxt">${msg}</div>`;
+  const sp=document.createElement('hr');sp.className='sep';
+  const bb=document.createElement('div');bb.className='pbtns';
+  btns.forEach((b,i)=>{
+    const btn=document.createElement('button');
+    btn.className='btn'+(i===0?' pri':'');
+    btn.textContent=b.label;btn.onclick=b.fn;bb.appendChild(btn);
+  });
+  bd.appendChild(mr);bd.appendChild(sp);bd.appendChild(bb);
+  w.appendChild(tb);w.appendChild(bd);document.body.appendChild(w);return w;
+}
+function clearPopups(){document.querySelectorAll('.popup').forEach(p=>p.remove());}
+function alert(icon,title,msg){
+  snd(icon==='info'?'notify':'exclaim');
+  popup('a'+Date.now(),icon,title,msg,
+    [{label:'OK',fn:clearPopups}],
+    {t:window.innerHeight/2-120,l:Math.max(20,window.innerWidth/2-200)}
+  );
+}
+
+// EVENT RELEASE — instantly triggers chaos
+function showEventRelease(){
+  snd('notify');updateTimes();
+  triggerChaos();
+}
+
+// CHAOS
+const MSGS=[
+  ['error','Critical Error','EVENT.EXE has stopped working.\n\nException code: 0xC0000005\nFault offset: 0xF00DBE3F\n\nClick OK to terminate the program.'],
+  ['error','Windows Explorer','The instruction at 0xC4SE0001 referenced memory at 0x00000000.\n\nError code: 0xC000001D\nThe memory could not be read.'],
+  ['warn','Low Virtual Memory','Your computer is running low on virtual memory.\n\nError code: 0x8007000E\n\nClose Case Event files to free memory.'],
+  ['error','ROBLOX.exe — Fatal Error','Too many game submissions received.\n\nException code: 0xCAFEBABE\nFault module: ROBLOX.exe\nOffset: 0x00C4SE01'],
+  ['warn','System Warning','Multiple puzzle files detected.\nMemory allocation failed.\n\nError code: 0x80070008\n\nPress OK to ignore and continue.'],
+  ['error','CASE_EVENT.SYS','A fatal exception 0x0000007E has occurred at 0xF00DB33F.\n\nError code: 0xC0000034\n\nPress OK to terminate.'],
+  ['error','KERNEL_DATA_INPAGE_ERROR','STOP: 0x0000007A\n\nError code: 0xC000009C\nFaulting address: 0xAX0S0001\n\nDumping physical memory...'],
+  ['info','Event Log','EVENT.LOG entry 0x4C4F4C:\n\nCase Event process started.\nMemory allocated: 999%.\n\nError code: 0x80004005'],
+  ['error','PUZZLE_BUFFER_OVERFLOW','Puzzle buffer exceeded maximum size.\n\nError code: 0xC00000FD\nStack overflow at: 0x00C4SE99\n\nReducing difficulty... FAILED.'],
+  ['warn','TEAM_ASSIGN.EXE','Cannot assign team. All slots occupied.\n\nError code: 0x80070057\n\nCreating Team Purple... FAILED.'],
+  ['error','AXO_STUFF.SYS','A fatal exception occurred in AXO_STUFF.SYS.\n\nError code: 0xC0000034\nAddress: 0xDEADBEEF\n\nPress OK to terminate.\nPress Cancel to also terminate.'],
+  ['error','SUBMISSION_HANDLER.EXE','Access violation reading location 0x00000000.\n\nError code: 0xC0000005\nModule: SUBMISSION_HANDLER.EXE\nOffset: 0x0000C4SE'],
+  ['warn','Registry Corruption Detected','Registry key HKLM\\CASE_EVENT could not be read.\n\nError code: 0x8007025D\n\nSystem stability cannot be guaranteed.'],
+  ['warn','Disk Full','Drive C:\\ is full.\n\nError code: 0x80070070\nAxo\'s Stuff Event files: 100% disk usage.\n\nFree up space to continue.'],
+  ['error','CRITICAL STOP','STOP: 0x000000C4\n0xC4SE0001  0x00000001  0xAX0S0001  0xDEADC0DE\n\nThe event is too large for this system.\nWindows will now shut down.'],
+];
+let chaosOn=false;
+function triggerChaos(){
+  if(chaosOn)return;chaosOn=true;snd('critical');
+  let i=0;const tot=22;
+  const iv=setInterval(()=>{
+    if(i>=tot){clearInterval(iv);setTimeout(showBSOD,600);return;}
+    spawnC(i);i++;
+  },160);
+}
+function spawnC(i){
+  const[ico,ttl,msg]=MSGS[i%MSGS.length];
+  const id='c'+i;
+  // Fully randomized across entire screen
+  const popW=360,popH=200;
+  const x=Math.random()*(Math.max(window.innerWidth-popW,10));
+  const y=Math.random()*(Math.max(window.innerHeight-popH,10));
+  const p=popup(id,ico,ttl,msg,
+    [{label:'OK',fn:()=>document.getElementById(id+'-p')?.remove()},
+     {label:'Cancel',fn:()=>document.getElementById(id+'-p')?.remove()}],
+    {t:y,l:x}
+  );
+  p.style.zIndex=7000+i;
+  // Play sfx.wav for every popup by cloning the audio element
+  try{
+    const a=document.getElementById('snd-error').cloneNode();
+    a.volume=0.7;a.play();
+  }catch(e){}
+}
+function showBSOD(){
+  document.querySelectorAll('.popup,.xpw').forEach(e=>e.remove());
+  document.getElementById('taskbar').style.display='none';
+  updateTimes();
+  document.getElementById('bsod').style.display='block';
+}
+
+// SUBMIT — opens Google Form with pre-filled fields
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function doSubmit(){
+  const u=document.getElementById('fu').value.trim();
+  const g=document.getElementById('fg').value.trim();
+  const p=document.getElementById('fp').value.trim();
+  if(!u){snd('exclaim');alert('warn','Missing Field','Please enter your Roblox username.');return;}
+  if(!g){snd('exclaim');alert('warn','Missing Field','Please enter your game link.');return;}
+  if(!g.includes('roblox.com')){snd('exclaim');alert('warn','Invalid Link','Please enter a valid Roblox game link.\n(e.g. https://www.roblox.com/games/...)');return;}
+
+  const pw=document.getElementById('spw');
+  const pb=document.getElementById('spb');
+  const st=document.getElementById('sst');
+  const sb=document.getElementById('ssb');
+  pw.style.display='block';
+
+  for(const[pct,msg]of[[15,'Validating...'],[50,'Preparing form...'],[100,'Opening Google Form...']]) {
+    pb.style.width=pct+'%';st.textContent=msg;sb.textContent=msg;await sleep(300);
+  }
+
+  pw.style.display='none';
+
+  // Just in case the google form needs to be moved somewhere else
+// This is a Fallback
+  if(GOOGLE_FORM_BASE.includes('YOUR_FORM_ID')){
+    sb.textContent='Setup needed — see popup';
+    alert('warn','Setup Required',
+      `Form not yet configured!\n\nUsername: ${u}\nGame: ${g}\nProof: ${p||'Not provided'}\n\nReplace YOUR_FORM_ID and entry IDs in the script with your real Google Form values.\n\nSee the setup instructions in the code comments.`);
+    return;
+  }
+
+  // Build pre-filled Google Form URL
+  const params = new URLSearchParams();
+  params.set(ENTRY_USERNAME, u);
+  params.set(ENTRY_GAME_LINK, g);
+  if(p) params.set(ENTRY_PROOF, p);
+  const formUrl = `${GOOGLE_FORM_BASE}?${params.toString()}`;
+
+  sb.textContent='Opening Google Form...';
+  snd('notify');
+  window.open(formUrl, '_blank');
+
+  alert('info','Redirecting to Google Form',
+    `Your details have been pre-filled in the Google Form.\n\nUsername: ${u}\nGame: ${g}\n\nPlease click Submit in the form that just opened to complete your entry.`);
+}
+</script>
+</body>
+</html>
